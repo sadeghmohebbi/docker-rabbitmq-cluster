@@ -10,6 +10,10 @@ services:
       - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
       - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
       - RABBITMQ_DEFAULT_VHOST=${RABBITMQ_DEFAULT_VHOST}
+    networks:
+      crv_dev_network:
+        aliases:
+          - rabbitmq1
 
   rabbitmq2:
     image: rabbitmq:3-management
@@ -21,6 +25,10 @@ services:
     volumes:
       - ./cluster-entrypoint.sh:/usr/local/bin/cluster-entrypoint.sh
     entrypoint: /usr/local/bin/cluster-entrypoint.sh
+    networks:
+      crv_dev_network:
+        aliases:
+          - rabbitmq2
 
   rabbitmq3:
     image: rabbitmq:3-management
@@ -32,6 +40,10 @@ services:
     volumes:
       - ./cluster-entrypoint.sh:/usr/local/bin/cluster-entrypoint.sh
     entrypoint: /usr/local/bin/cluster-entrypoint.sh
+    networks:
+      crv_dev_network:
+        aliases:
+          - rabbitmq3
     
   haproxy:
     image: haproxy:1.7
@@ -44,3 +56,11 @@ services:
     ports:
       - 15672:15672
       - 5672:5672
+    networks:
+      crv_dev_network:
+        aliases:
+          - rabbitmq_cluster
+
+networks:
+  crv_dev_network:
+    driver: bridge
