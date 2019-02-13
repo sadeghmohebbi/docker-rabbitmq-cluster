@@ -63,4 +63,5 @@ services:
 
 networks:
   crv_dev_network:
+    name: my_net
     driver: bridge
