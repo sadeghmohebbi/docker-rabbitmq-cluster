@@ -11,7 +11,7 @@ services:
       - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
       - RABBITMQ_DEFAULT_VHOST=${RABBITMQ_DEFAULT_VHOST}
     networks:
-      crv_dev_network:
+      default:
         aliases:
           - rabbitmq1
 
@@ -26,7 +26,7 @@ services:
       - ./cluster-entrypoint.sh:/usr/local/bin/cluster-entrypoint.sh
     entrypoint: /usr/local/bin/cluster-entrypoint.sh
     networks:
-      crv_dev_network:
+      default:
         aliases:
           - rabbitmq2
 
@@ -41,7 +41,7 @@ services:
       - ./cluster-entrypoint.sh:/usr/local/bin/cluster-entrypoint.sh
     entrypoint: /usr/local/bin/cluster-entrypoint.sh
     networks:
-      crv_dev_network:
+      default:
         aliases:
           - rabbitmq3
     
@@ -57,11 +57,11 @@ services:
       - 15672:15672
       - 5672:5672
     networks:
-      crv_dev_network:
+      default:
         aliases:
           - rabbitmq_cluster
 
 networks:
-  crv_dev_network:
-    name: my_net
+  default:
     driver: bridge
+    name: my_network
